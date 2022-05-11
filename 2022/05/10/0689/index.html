@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.1.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>0698.深度优先搜索 - 闲敲棋子</title>
+
+  
+
+  
+    <meta name="description" content="A DFS problem from leetcode 698. Partition to K Equal Sum Subsets">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0698.深度优先搜索">
+<meta property="og:url" content="http://example.com/2022/05/10/0689/index.html">
+<meta property="og:site_name" content="闲敲棋子">
+<meta property="og:description" content="A DFS problem from leetcode 698. Partition to K Equal Sum Subsets">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-10T15:23:22.385Z">
+<meta property="article:modified_time" content="2022-05-10T15:28:35.149Z">
+<meta property="article:author" content="JuboGe">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">闲敲棋子</div><div class="sub cap">潜龙勿用</div></a></div>
+<nav class="menu dis-select"></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-For-the-first-tips"><span class="toc-text">1. For the first tips:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-For-the-second-tips"><span class="toc-text">2. For the second tips:</span></a></li></ol></div></div></div>
+
+
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/waxxyybb" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/08a41b181ce68.svg"/></a><a class="social" href="/assets/03.mp3" rel="noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/3845874.svg"/></a></div></footer>
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-05-10T15:23:22.385Z">2022-05-10</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>0698.深度优先搜索</span></h1>
+<p>A DFS problem from leetcode <a target="_blank" rel="noopener" href="https://leetcode.com/problems/partition-to-k-equal-sum-subsets/">698. Partition to K Equal Sum Subsets</a></p>
+<span id="more"></span>
+
+<p>I find my old version solution in 2018 invalid this try.<br>Then I look up some of most votes items and meet the same situation.<br>I get a dfs solution which is faster than the bit-mask method.<br>In the end, I think this problem should be <em><strong>Hard</strong></em> level because of the rigid time limit.</p>
+<p>We use three trickes to meet the requirment:</p>
+<ol>
+<li>end straight when there is no bucket can hold <code>nums[index]</code></li>
+<li>end straight when <code>index</code> arrive the length of <code>nums</code> without examination of <code>cur_sum</code> array</li>
+<li>reversed sort array <code>nums</code></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canPartitionKSubsets</span>(<span class="params">self, nums, k</span>):</span><br><span class="line">        target = <span class="built_in">sum</span>(nums)</span><br><span class="line">        <span class="keyword">if</span> target % k != <span class="number">0</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        target //= k</span><br><span class="line">        cur = [<span class="number">0</span>] * k; nums.sort( reverse = <span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params"> index</span>):</span><br><span class="line">            <span class="keyword">if</span> index == <span class="built_in">len</span>( nums): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>( k):</span><br><span class="line">                <span class="keyword">if</span> nums[index] + cur[i] &lt;= target:</span><br><span class="line">                    cur[i] += nums[index]</span><br><span class="line">                    <span class="keyword">if</span> foo( index + <span class="number">1</span>) == <span class="literal">True</span>: <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                    cur[i] -= nums[index]</span><br><span class="line">                <span class="keyword">if</span> cur[i] == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> foo( <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Thanks for your issue. I’ll list my thinking progress.</p>
+<h2 id="1-For-the-first-tips"><a href="#1-For-the-first-tips" class="headerlink" title="1. For the first tips:"></a>1. For the first tips:</h2><p>Our target is to divide an array <code>nums</code> with size <code>length</code> to <code>k</code> different bucket with same sum.<br>If we could make it, there must be a bucket holding <code>nums[index]</code>, and the bucket’s order doesn’t matter.</p>
+<p>Inner the <code>for i in range(k)</code> loop, before the <code>i</code>-th loop, <code>cur[i]</code> which means the current sum of <code>i-th</code> bucket has two situations:</p>
+<ul>
+<li><code>cur[i] != 0</code></li>
+<li><code>cur[i] == 0</code>: it means the i-th bucket is empty.<br>However, there is an unspoken rules: <code>cur[j] = 0 if j &gt; i and cur[i] == 0</code>. If after this step, the empty bucket <code>i</code> couldn’t hold <code>nums[index]</code>, neither the later.</li>
+</ul>
+<p>It’s an algorithm design paradigm named <strong>Branch and bound</strong></p>
+<h2 id="2-For-the-second-tips"><a href="#2-For-the-second-tips" class="headerlink" title="2. For the second tips:"></a>2. For the second tips:</h2><p>Lines 10 <code>if nums[index] + cur[i] &lt;= target</code> ensure that any bucket’s sum <code>cur[i] &lt;= target</code></p>
+<p>When we get the <code>index == len( nums)</code> for 0-index arrays, it means:</p>
+<ul>
+<li>any number from <code>nums</code> has been in a bucket</li>
+<li><code>cur[0] + cur[1] + ... + cur[k-1] = sum(nums) = k * target</code></li>
+<li><code>0 &lt;= cur[i] &lt;= target, for i = 0, 1, 2, ..., k- 1</code></li>
+</ul>
+<p>If there is a <code>cur[i]</code> not equals to <code>target</code>, <code>sum( cur)</code> must be less than k * target.</p>
+<p>We use <strong>loop invariant</strong> to prove it.</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/05/10/Jubo%E5%86%8D%E8%B5%B7/">Jubo再起<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/05/10/Latex/">Latex中文环境搭建<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="http://example.com/">@JuboGe</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0" title="v1.7.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
