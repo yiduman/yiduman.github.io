@@ -43,8 +43,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
-
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -139,33 +137,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
               </a>
             </li>
           
@@ -277,8 +251,10 @@
                 
                 <p>A DFS problem from leetcode <a target="_blank" rel="noopener" href="https://leetcode.com/problems/partition-to-k-equal-sum-subsets/">698. Partition to K Equal Sum Subsets</a></p>
 <span id="more"></span>
-
-<p>I find my old version solution in 2018 invalid this try.<br>Then I look up some of most votes items and meet the same situation.<br>I get a dfs solution which is faster than the bit-mask method.<br>In the end, I think this problem should be <em><strong>Hard</strong></em> level because of the rigid time limit.</p>
+<p>I find my old version solution in 2018 invalid this try.<br>
+Then I look up some of most votes items and meet the same situation.<br>
+I get a dfs solution which is faster than the bit-mask method.<br>
+In the end, I think this problem should be <em><strong>Hard</strong></em> level because of the rigid time limit.</p>
 <p>We use three trickes to meet the requirment:</p>
 <ol>
 <li>end straight when there is no bucket can hold <code>nums[index]</code></li>
@@ -286,16 +262,19 @@
 <li>reversed sort array <code>nums</code></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">canPartitionKSubsets</span>(<span class="hljs-params">self, nums, k</span>):<br>        target = <span class="hljs-built_in">sum</span>(nums)<br>        <span class="hljs-keyword">if</span> target % k != <span class="hljs-number">0</span>: <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        target //= k<br>        cur = [<span class="hljs-number">0</span>] * k; nums.sort( reverse = <span class="hljs-literal">True</span>)<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"> index</span>):<br>            <span class="hljs-keyword">if</span> index == <span class="hljs-built_in">len</span>( nums): <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>( k):<br>                <span class="hljs-keyword">if</span> nums[index] + cur[i] &lt;= target:<br>                    cur[i] += nums[index]<br>                    <span class="hljs-keyword">if</span> foo( index + <span class="hljs-number">1</span>) == <span class="hljs-literal">True</span>: <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>                    cur[i] -= nums[index]<br>                <span class="hljs-keyword">if</span> cur[i] == <span class="hljs-number">0</span>: <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> foo( <span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
-
 <p>Thanks for your issue. I’ll list my thinking progress.</p>
-<h2 id="1-For-the-first-tips"><a href="#1-For-the-first-tips" class="headerlink" title="1. For the first tips:"></a>1. For the first tips:</h2><p>Our target is to divide an array <code>nums</code> with size <code>length</code> to <code>k</code> different bucket with same sum.<br>If we could make it, there must be a bucket holding <code>nums[index]</code>, and the bucket’s order doesn’t matter.</p>
+<h2 id="1-For-the-first-tips">1. For the first tips:</h2>
+<p>Our target is to divide an array <code>nums</code> with size <code>length</code> to <code>k</code> different bucket with same sum.<br>
+If we could make it, there must be a bucket holding <code>nums[index]</code>, and the bucket’s order doesn’t matter.</p>
 <p>Inner the <code>for i in range(k)</code> loop, before the <code>i</code>-th loop, <code>cur[i]</code> which means the current sum of <code>i-th</code> bucket has two situations:</p>
 <ul>
 <li><code>cur[i] != 0</code></li>
-<li><code>cur[i] == 0</code>: it means the i-th bucket is empty.<br>However, there is an unspoken rules: <code>cur[j] = 0 if j &gt; i and cur[i] == 0</code>. If after this step, the empty bucket <code>i</code> couldn’t hold <code>nums[index]</code>, neither the later.</li>
+<li><code>cur[i] == 0</code>: it means the i-th bucket is empty.<br>
+However, there is an unspoken rules: <code>cur[j] = 0 if j &gt; i and cur[i] == 0</code>. If after this step, the empty bucket <code>i</code> couldn’t hold <code>nums[index]</code>, neither the later.</li>
 </ul>
 <p>It’s an algorithm design paradigm named <strong>Branch and bound</strong></p>
-<h2 id="2-For-the-second-tips"><a href="#2-For-the-second-tips" class="headerlink" title="2. For the second tips:"></a>2. For the second tips:</h2><p>Lines 10 <code>if nums[index] + cur[i] &lt;= target</code> ensure that any bucket’s sum <code>cur[i] &lt;= target</code></p>
+<h2 id="2-For-the-second-tips">2. For the second tips:</h2>
+<p>Lines 10 <code>if nums[index] + cur[i] &lt;= target</code> ensure that any bucket’s sum <code>cur[i] &lt;= target</code></p>
 <p>When we get the <code>index == len( nums)</code> for 0-index arrays, it means:</p>
 <ul>
 <li>any number from <code>nums</code> has been in a bucket</li>
@@ -445,6 +424,7 @@
 
   
   
+
 
 
 
@@ -639,6 +619,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

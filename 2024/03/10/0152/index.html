@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="Porco Rosso 写字的地方">
 <meta property="og:description" content="Leetcode动态规划的题目152. Maximum Product Subarray">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/assets/001.png">
-<meta property="og:image" content="http://example.com/assets/002.png">
-<meta property="og:image" content="http://example.com/assets/003.png">
+<meta property="og:image" content="http://example.com/2024/03/10/assets/001.png">
+<meta property="og:image" content="http://example.com/2024/03/10/assets/002.png">
+<meta property="og:image" content="http://example.com/2024/03/10/assets/003.png">
 <meta property="article:published_time" content="2024-03-10T15:40:35.153Z">
 <meta property="article:modified_time" content="2024-03-12T15:49:34.781Z">
 <meta property="article:author" content="Porco Rosso">
 <meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/assets/001.png">
+<meta name="twitter:image" content="http://example.com/2024/03/10/assets/001.png">
   
   
   
@@ -46,8 +46,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -143,33 +141,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
               </a>
             </li>
           
@@ -281,22 +255,20 @@
                 
                 <p>Leetcode动态规划的题目<a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a></p>
 <span id="more"></span>
-
 <p>题目不难，是<a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a>的拓展。</p>
 <p>标准的解法就是动态规划，时间复杂度O(n)，空间复杂度O(1)。《算法导论》为了介绍分治，在第四章Divide-and-Conquer，介绍了另一种方法，时间复杂度为O(nlogn)，此处不再赘述。</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/discuss/183483/JavaC%2B%2BPython-it-can-be-more-simple">lee215</a>大牛的另一种解法令人耳目一新:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maxProduct</span>(<span class="hljs-params">self, A</span>):<br>    B = A[::-<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(A)):<br>        A[i] *= A[i - <span class="hljs-number">1</span>] <span class="hljs-keyword">or</span> <span class="hljs-number">1</span><br>        B[i] *= B[i - <span class="hljs-number">1</span>] <span class="hljs-keyword">or</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(A + B)<br></code></pre></td></tr></table></figure>
-
 <p>首先，用0把数组划分为若干个子数组，最终的结果在0和不含0子数组中产生。</p>
-<p><img src="/../assets/001.png" srcset="/img/loading.gif" lazyload alt="001"></p>
+<p><img src="../assets/001.png" srcset="/img/loading.gif" lazyload alt="001"></p>
 <p>以一个不含0的长度为n的<strong>整数数组</strong>nums为例，最终可以证明，<strong>该数组的最大乘积，一定是从某端点出发，延展到某个位置为止</strong>。</p>
-<p><img src="/../assets/002.png" srcset="/img/loading.gif" lazyload alt="002"></p>
+<p><img src="../assets/002.png" srcset="/img/loading.gif" lazyload alt="002"></p>
 <p>分类讨论</p>
 <ol>
 <li>假如这个数组没有负数，最大乘积一定是从最左端到最右端，结论成立</li>
 <li>假设这个数组包含1个负数，负数位于index，那最大乘积一定是由<code>nums[0:index+1]</code>或者<code>nums[index:n]</code>产生，结论成立</li>
 </ol>
-<p><img src="/../assets/003.png" srcset="/img/loading.gif" lazyload alt="003"></p>
+<p><img src="../assets/003.png" srcset="/img/loading.gif" lazyload alt="003"></p>
 <ol>
 <li>假如这个数组包含偶数个负数，最大乘积一定是从最左端到最右端，结论成立</li>
 <li>假如这个数组包含3个负数，分割点一定是第一个负数(i)或者第三个负数(k)，结论成立</li>
@@ -437,6 +409,7 @@
 
   
   
+
 
 
 
@@ -631,6 +604,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
