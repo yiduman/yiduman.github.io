@@ -16,26 +16,24 @@
   <meta name="author" content="Porco Rosso">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Leetcode动态规划的题目152. Maximum Product Subarray">
+    <meta name="description" content="文中的演示代码基于CPython&#x2F;Python 3.9">
 <meta property="og:type" content="article">
-<meta property="og:title" content="0152.一道非典型动态规划题">
-<meta property="og:url" content="http://example.com/2024/03/10/0152/index.html">
+<meta property="og:title" content="Python魔法函数之__new__">
+<meta property="og:url" content="http://example.com/2024/03/11/%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Porco Rosso 写字的地方">
-<meta property="og:description" content="Leetcode动态规划的题目152. Maximum Product Subarray">
+<meta property="og:description" content="文中的演示代码基于CPython&#x2F;Python 3.9">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/03/10/assets/001.png">
-<meta property="og:image" content="http://example.com/2024/03/10/assets/002.png">
-<meta property="og:image" content="http://example.com/2024/03/10/assets/003.png">
-<meta property="article:published_time" content="2024-03-10T15:40:35.153Z">
-<meta property="article:modified_time" content="2024-03-12T15:49:34.781Z">
+<meta property="og:image" content="http://example.com/assets/003.svg">
+<meta property="article:published_time" content="2024-03-11T01:09:02.734Z">
+<meta property="article:modified_time" content="2024-03-13T04:47:57.753Z">
 <meta property="article:author" content="Porco Rosso">
-<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2024/03/10/assets/001.png">
+<meta name="twitter:image" content="http://example.com/assets/003.svg">
   
   
   
-  <title>0152.一道非典型动态规划题 - Porco Rosso 写字的地方</title>
+  <title>Python魔法函数之__new__ - Porco Rosso 写字的地方</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -46,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -177,7 +177,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="0152.一道非典型动态规划题"></span>
+            <span id="subtitle" data-typed-text="Python魔法函数之__new__"></span>
           
         </div>
 
@@ -188,8 +188,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-10 23:40" pubdate>
-          2024年3月10日 晚上
+        <time datetime="2024-03-11 09:09" pubdate>
+          2024年3月11日 上午
         </time>
       </span>
     
@@ -200,7 +200,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          356 字
+          1k 字
         
       </span>
     
@@ -211,7 +211,7 @@
         
         
         
-          3 分钟
+          9 分钟
         
       </span>
     
@@ -248,32 +248,77 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">0152.一道非典型动态规划题</h1>
+            <h1 id="seo-header">Python魔法函数之__new__</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Leetcode动态规划的题目<a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a></p>
+                <p>文中的演示代码基于CPython/Python 3.9</p>
 <span id="more"></span>
-<p>题目不难，是<a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a>的拓展。</p>
-<p>标准的解法就是动态规划，时间复杂度O(n)，空间复杂度O(1)。《算法导论》为了介绍分治，在第四章Divide-and-Conquer，介绍了另一种方法，时间复杂度为O(nlogn)，此处不再赘述。</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/discuss/183483/JavaC%2B%2BPython-it-can-be-more-simple">lee215</a>大牛的另一种解法令人耳目一新:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maxProduct</span>(<span class="hljs-params">self, A</span>):<br>    B = A[::-<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(A)):<br>        A[i] *= A[i - <span class="hljs-number">1</span>] <span class="hljs-keyword">or</span> <span class="hljs-number">1</span><br>        B[i] *= B[i - <span class="hljs-number">1</span>] <span class="hljs-keyword">or</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(A + B)<br></code></pre></td></tr></table></figure>
-<p>首先，用0把数组划分为若干个子数组，最终的结果在0和不含0子数组中产生。</p>
-<p><img src="../assets/001.png" srcset="/img/loading.gif" lazyload alt="001"></p>
-<p>以一个不含0的长度为n的<strong>整数数组</strong>nums为例，最终可以证明，<strong>该数组的最大乘积，一定是从某端点出发，延展到某个位置为止</strong>。</p>
-<p><img src="../assets/002.png" srcset="/img/loading.gif" lazyload alt="002"></p>
-<p>分类讨论</p>
+<p>阅读Python 3 <code>collections</code>的<code>namedtuple</code>源码时，被<code>__new__</code>弄得很糊涂，翻看了官方教程和源码，藉此梳理</p>
+<h2 id="引言">引言</h2>
+<p>如<em>代码1</em>所示，定义一个<code>User</code>类，并实例化两个对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码.1</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params"> cls, *args, **kwargvs</span>):<br>        <span class="hljs-built_in">print</span>( <span class="hljs-string">f&quot;In <span class="hljs-subst">&#123;cls&#125;</span> new function&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>().__new__( cls)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name = <span class="hljs-string">&quot;Juboge&quot;</span></span>):<br>        self.name = name<br>        <span class="hljs-built_in">print</span>( <span class="hljs-string">f&quot;In <span class="hljs-subst">&#123;self&#125;</span> init function, with name = <span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    student = User( <span class="hljs-string">&quot;One&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br>    student_two = User( <span class="hljs-string">&quot;Two&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">In &lt;class &#x27;__main__.User&#x27;&gt; new function<br>In &lt;__main__.User object at 0x000001CD83CACBE0&gt; init function, with name = One<br><br>In &lt;class &#x27;__main__.User&#x27;&gt; new function<br>In &lt;__main__.User object at 0x000001CD83CACD30&gt; init function, with name = Two<br></code></pre></td></tr></table></figure>
+<p>Python的解释器在执行时，<code>new</code>和<code>init</code>的第一个参数有区别</p>
+<ul>
+<li>遇到<code>new</code>魔法函数时，第一个参数传入的是类本身<code>class</code></li>
+<li>遇到<code>init</code>魔法函数时，第一个参数传入的是类的实例化对象<code>instance</code></li>
+</ul>
+<blockquote>
+<p><code>cls</code>和<code>self</code>的命名是一种约定习惯，并非强制规范，这么命名避免混淆</p>
+</blockquote>
+<p><code>student = User( &quot;One&quot;)</code>语句依次调用了这两个魔法函数，<code>new</code>调用在<code>init</code>之前，<code>new</code>方法用于实例化对象，<code>init</code>方法用于初始化对象。<strong>new方法的作用，是控制类的实例化过程</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">student = User( <span class="hljs-string">&quot;One&quot;</span>)<br><span class="hljs-comment"># 等价于</span><br>student = __new__( User, ( <span class="hljs-string">&quot;One&quot;</span>, ) , &#123;&#125; )<br>__init__( student, ( <span class="hljs-string">&quot;One&quot;</span>, ), &#123;&#125; )<br></code></pre></td></tr></table></figure>
+<h2 id="metaclass关键字">metaclass关键字</h2>
+<p>如<em>代码2</em> 所示，引入<code>metaclass</code>关键字</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码.2</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">UserMetaClass</span>( <span class="hljs-title class_ inherited__">type</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params"> cls, *args, **kwargs</span>):<br>        <span class="hljs-built_in">print</span>( <span class="hljs-string">f&quot;In <span class="hljs-subst">&#123;cls&#125;</span> new function&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>().__new__(  cls, *args, **kwargs )<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">NewUser</span>( metaclass = UserMetaClass):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params"> cls, *args, **kwargvs</span>):<br>        <span class="hljs-built_in">print</span>( <span class="hljs-string">f&quot;In <span class="hljs-subst">&#123;cls&#125;</span> new function&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>().__new__( cls)<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name = <span class="hljs-string">&quot;Juboge&quot;</span></span>):<br>        <span class="hljs-built_in">print</span>( <span class="hljs-string">f&quot;In <span class="hljs-subst">&#123;self&#125;</span> new function&quot;</span>)<br>        self.name = name<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># nstudent = NewUser( &quot;One&quot;)</span><br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">In &lt;class &#x27;__main__.UserMetaClass&#x27;&gt; new function<br></code></pre></td></tr></table></figure>
+<p>在解释 <em>代码2</em> 结果之前，必须先强调一个重要的概念——<strong>一切皆对象</strong>，这个一切不限于：</p>
+<ul>
+<li>函数 function</li>
+<li>模板 module</li>
+<li>变量 variable</li>
+<li>实例 instance</li>
+<li>类 class</li>
+</ul>
+<p>没错，<em><strong>类也是对象</strong></em></p>
+<h3 id="两个类">两个类</h3>
+<p>python中有两个重要的类：</p>
+<ul>
+<li><code>object</code>：python的始祖类，是继承树的根节点，都由<code>object</code>类派生或者迭代派生而来</li>
+<li><code>type</code>: python的模板类，python中的任何对象，都由<code>type</code>类实例化或者迭代实例化而来</li>
+</ul>
+<p><code>object</code>类和<code>type</code>类他俩啥关系？他们同样适用这两个规则，<code>object</code>是<code>type</code>的实例化对象，<code>object</code>同时又是<code>type</code>的基类。</p>
+<p>因此<code>issubclass( type, object)</code>和<code>isinstance( object, type)</code>这两条语句的返回值都是<code>True</code></p>
+<p>举一个具体一点的例子：</p>
+<p>字符串<code>&quot;abc&quot;</code>它是<code>str</code>类的实例化对象，而<code>str</code>类本身，是<code>type</code>类的实例化对象。因此<code>&quot;abc&quot;.__class__.__class__</code>的值为<code>type</code>，<em>代码1</em>中的<code>User</code>类，它当然也是<code>type</code>类的实例化对象，<code>student.__class__.__class__</code>的值也为<code>type</code></p>
+<p>如图所示，是字符串<code>“abc”</code>，字符串类<code>string</code>、<code>object</code>类和<code>type</code>类之间的关系：</p>
+<p><img src="/assets/003.svg" srcset="/img/loading.gif" lazyload alt="插图1"></p>
+<h3 id="metaclass">metaclass</h3>
+<p><em>代码1</em> 中的类定义语句，缺省条件下，默认继承<code>object</code>，元类是<code>type</code></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">User:</span><br><span class="hljs-symbol">    <span class="hljs-symbol">pass</span></span><br># 由于类的声明没有加其它关键字，等价于：<br><span class="hljs-symbol">class</span> <span class="hljs-symbol">User</span>( <span class="hljs-symbol">object, <span class="hljs-symbol">metaclass</span></span> = <span class="hljs-symbol">type</span>):<br>    <span class="hljs-symbol">pass</span><br></code></pre></td></tr></table></figure>
+<p>回到代码2，<code>Newuser</code>引入了<code>metaclass = UserMetaClass</code>语句，将自己的元类设成了<code>UserMetaClass</code>，也就是说<code>NewUser</code>被视为<code>UserMetaClass</code>的实例化对象。</p>
+<blockquote>
+<p>元类需要继承<code>type</code></p>
+</blockquote>
+<p>在Python解释器视角下，<code>NewUser</code>的定义过程，即是<code>UserMetaClass</code>类实例化的过程。上一章我们说过，<code>new</code>方法用于控制类的实例化过程，因此定义<code>NewUser</code>时，会调用<code>UserMetaClass</code>的<code>new</code>方法</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">NewUser</span>( <span class="hljs-title">metaclass</span> = <span class="hljs-type">UserMetaClass</span>):</span><br><span class="hljs-class"># 等价于</span><br><span class="hljs-class"><span class="hljs-type">NewUser</span> = <span class="hljs-type">UserMetaClass</span>.__new__( <span class="hljs-type">UserMetaCLass</span>, *<span class="hljs-title">args</span>, **<span class="hljs-title">kwargs</span> )</span><br></code></pre></td></tr></table></figure>
+<p>这也是<em>代码2</em> 会打印信息的原因。<em>代码2</em> 执行过程，<code>NewUser</code>类自身的<code>new</code>方法没有被调用过，因为<code>NewUser</code>没有实例化对象。</p>
+<h2 id="尾记">尾记</h2>
+<p>本篇博客着重强调了两个概念：</p>
 <ol>
-<li>假如这个数组没有负数，最大乘积一定是从最左端到最右端，结论成立</li>
-<li>假设这个数组包含1个负数，负数位于index，那最大乘积一定是由<code>nums[0:index+1]</code>或者<code>nums[index:n]</code>产生，结论成立</li>
+<li><strong>new魔法函数用于控制类的实例化过程</strong></li>
+<li><strong>类也是对象</strong></li>
 </ol>
-<p><img src="../assets/003.png" srcset="/img/loading.gif" lazyload alt="003"></p>
-<ol>
-<li>假如这个数组包含偶数个负数，最大乘积一定是从最左端到最右端，结论成立</li>
-<li>假如这个数组包含3个负数，分割点一定是第一个负数(i)或者第三个负数(k)，结论成立</li>
-</ol>
-<p>依此类推，这个结论是成立的。</p>
+<p><em>代码1</em> 中的的<code>new</code>方法执行了两次，因为<code>User</code>类实例化了两次；而<em>代码2</em> 中的<code>new</code>方法只执行了一次，因为<code>UserMetaClass</code>只实例化了一次（定义<code>NewUser</code>类）。很多博客会介绍<code>new</code>方法，如果不强调<strong>类也是对象</strong>，我们很容易将类自身的<code>new</code>方法和元类的<code>new</code>方法混淆。</p>
+<p>笔者将在下一篇博客中探讨：</p>
+<ul>
+<li>[ ] <code>type</code>类</li>
+<li>[ ] <code>metaclass</code>的传参过程</li>
+</ul>
 
                 
               </div>
@@ -286,7 +331,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Algorithm/" class="print-no-link">#Algorithm</a>
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
       
     </div>
   
@@ -298,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>0152.一道非典型动态规划题</div>
-      <div>http://example.com/2024/03/10/0152/</div>
+      <div>Python魔法函数之__new__</div>
+      <div>http://example.com/2024/03/11/魔法函数/</div>
     </div>
     <div class="license-meta">
       
@@ -311,7 +356,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月10日</div>
+          <div>2024年3月11日</div>
         </div>
       
       
@@ -343,9 +388,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/10/01_prompt_tuning/" title="Prompt Tuning">
+                      <a href="/2024/03/11/0689/" title="0698.深度优先搜索">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Prompt Tuning</span>
+                        <span class="hidden-mobile">0698.深度优先搜索</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -409,7 +454,6 @@
 
   
   
-
 
 
 
@@ -604,49 +648,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
